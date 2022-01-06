@@ -9,3 +9,7 @@ type DoLoginParam struct {
 type HomeCountParam struct {
 	ServerUrl string
 }
+
+type HomeStatsParam struct {
+	ServerUrl string
+}

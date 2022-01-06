@@ -40,3 +40,20 @@ func TestHomeCount(t *testing.T) {
 	}
 	fmt.Println(string(bytes))
 }
+
+
+func TestHomeStatis(t *testing.T) {
+	TestDoLogin(t)
+	params := HomeStatsParam{
+		ServerUrl: url,
+	}
+	overview, err := HomeStatis(params, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
+	bytes, err := json.Marshal(overview)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(bytes))
+}
