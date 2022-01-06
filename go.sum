@@ -200,8 +200,8 @@ github.com/prometheus/procfs v0.6.0 h1:mxy4L2jP6qMonqmq+aTtOx1ifVWUgG/TAmntgbh3x
 github.com/prometheus/procfs v0.6.0/go.mod h1:cz+aTbrPOrUb4q7XlbU9ygM+/jj0fzG6c1xBZuNvfVA=
 github.com/rea1shane/basexporter v1.1.1 h1:fBNThOwC8m+23m8UfBUFWErYyRsXWCkecJdLr7wyKPA=
 github.com/rea1shane/basexporter v1.1.1/go.mod h1:SE0+WLloDAGfYOZPF8HLfyU3ME/tLnJ41JECmRqNfyk=
-github.com/rea1shane/http-pro v1.0.0 h1:atLCWgG37r0WkqYyS5uDEUnfQXrVKJRVhG8MCqo5mKw=
-github.com/rea1shane/http-pro v1.0.0/go.mod h1:sN6/f3UdmR622ScEimGJfAqxEP03aulrbWvFoPjmwog=
+github.com/rea1shane/http-pro v1.0.1 h1:Kj8ISxClRlZPN3xSjMvkuKS2vT0ZYe+a2XJl+tpbKzU=
+github.com/rea1shane/http-pro v1.0.1/go.mod h1:sN6/f3UdmR622ScEimGJfAqxEP03aulrbWvFoPjmwog=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/sirupsen/logrus v1.4.2/go.mod h1:tLMulIdttU9McNUspp0xgXVQah82FyeX6MwdIuYE2rE=

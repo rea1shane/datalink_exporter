@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/morikuni/failure v0.14.0
 	github.com/rea1shane/basexporter v1.1.1
-	github.com/rea1shane/http-pro v1.0.0
+	github.com/rea1shane/http-pro v1.0.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 )
 
