@@ -6,5 +6,6 @@ type DoLoginParam struct {
 	Password   string
 }
 
-type HomeCount struct {
+type HomeCountParam struct {
+	ServerUrl string
 }
