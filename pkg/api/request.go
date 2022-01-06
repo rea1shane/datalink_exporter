@@ -85,7 +85,7 @@ func HomeCount(p HomeCountParam, ctx context.Context) (Overview, error) {
 }
 
 // HomeStatis 获取主页的图表数据
-func HomeStatis(p HomeStatsParam, ctx context.Context) (Statis, error) {
+func HomeStatis(p HomeStatisParam, ctx context.Context) (Statis, error) {
 	url := p.ServerUrl + "/home/statis"
 	method := "POST"
 	responseStruct := Statis{}

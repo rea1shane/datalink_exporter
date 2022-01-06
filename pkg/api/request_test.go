@@ -44,7 +44,7 @@ func TestHomeCount(t *testing.T) {
 
 func TestHomeStatis(t *testing.T) {
 	TestDoLogin(t)
-	params := HomeStatsParam{
+	params := HomeStatisParam{
 		ServerUrl: url,
 	}
 	overview, err := HomeStatis(params, context.Background())

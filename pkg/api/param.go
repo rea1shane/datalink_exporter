@@ -10,6 +10,6 @@ type HomeCountParam struct {
 	ServerUrl string
 }
 
-type HomeStatsParam struct {
+type HomeStatisParam struct {
 	ServerUrl string
 }
