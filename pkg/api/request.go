@@ -10,10 +10,7 @@ import (
 	"strings"
 )
 
-var (
-	h             = httpro.GetHttp(3, 500)
-	sessionCookie *http.Cookie
-)
+var h = httpro.GetHttp(3, 500)
 
 const (
 	SessionKey     string             = "JSESSIONID"
@@ -22,46 +19,42 @@ const (
 )
 
 // DoLogin 登录
-func DoLogin(p DoLoginParam, ctx context.Context) error {
+func DoLogin(p DoLoginParam, ctx context.Context) (*http.Cookie, error) {
 	url := p.ServerUrl + "/userReq/doLogin"
 	method := "POST"
 	payloadStr := "loginEmail=" + p.LoginEmail + "&password=" + p.Password
 	payload := strings.NewReader(payloadStr)
 	req, err := http.NewRequest(method, url, payload)
 	if err != nil {
-		return failure.Wrap(err)
+		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	response, err := h.Request(req, ctx)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	body, err := httpro.GetStringResponseBody(response)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if body != "\"success\"" {
 		c := getReqFailureContext(method, url)
 		c["payload"] = payloadStr
 		c["reason"] = body
-		return failure.New(RequestError, c)
+		return nil, failure.New(RequestError, c)
 	}
-	for i, cookie := range response.Cookies() {
-		cookieMap := make(map[string]string)
+	cookieMap := make(map[string]string)
+	for _, cookie := range response.Cookies() {
 		cookieMap[cookie.Name] = cookie.Value
 		if cookie.Name == SessionKey {
-			sessionCookie = cookie
-			break
-		}
-		if i == len(response.Cookies())-1 {
-			c := getReqFailureContext(method, url)
-			c["payload"] = payloadStr
-			bytes, _ := json.Marshal(cookieMap)
-			c["cookies"] = string(bytes)
-			return failure.New(NoSessionError, c)
+			return cookie, nil
 		}
 	}
-	return nil
+	c := getReqFailureContext(method, url)
+	c["payload"] = payloadStr
+	bytes, _ := json.Marshal(cookieMap)
+	c["cookies"] = string(bytes)
+	return nil, failure.New(NoSessionError, c)
 }
 
 // HomeCount 获取主页的统计数据
@@ -73,7 +66,7 @@ func HomeCount(p HomeCountParam, ctx context.Context) (Overview, error) {
 	if err != nil {
 		return Overview{}, failure.Wrap(err)
 	}
-	req.AddCookie(sessionCookie)
+	req.AddCookie(p.SessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
 		return Overview{}, err
@@ -97,7 +90,7 @@ func HomeStatis(p HomeStatisParam, ctx context.Context) (Statis, error) {
 		return Statis{}, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	req.AddCookie(sessionCookie)
+	req.AddCookie(p.SessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
 		return Statis{}, err
@@ -217,7 +210,7 @@ func GroupInitGroup(p GroupInitGroupParam, ctx context.Context) ([]Group, error)
 		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.AddCookie(sessionCookie)
+	req.AddCookie(p.SessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
 		return nil, err
@@ -348,7 +341,7 @@ func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) ([]Worker, e
 		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.AddCookie(sessionCookie)
+	req.AddCookie(p.SessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
 		return nil, err
@@ -571,7 +564,7 @@ func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context
 		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.AddCookie(sessionCookie)
+	req.AddCookie(p.SessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
 		return nil, err
@@ -694,7 +687,7 @@ func HbaseTaskInitHbaseTaskList(p HbaseTaskInitHbaseTaskListParam, ctx context.C
 		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.AddCookie(sessionCookie)
+	req.AddCookie(p.SessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
 		return nil, err
@@ -817,7 +810,7 @@ func RabbitmqTaskInitRabbitmqTaskList(p RabbitmqTaskInitRabbitmqTaskListParam, c
 		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.AddCookie(sessionCookie)
+	req.AddCookie(p.SessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
 		return nil, err
@@ -938,7 +931,7 @@ func TaskMonitorInitTaskMonitor(p TaskMonitorInitTaskMonitorParam, ctx context.C
 		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.AddCookie(sessionCookie)
+	req.AddCookie(p.SessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
 		return nil, err

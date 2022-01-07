@@ -19,16 +19,25 @@ func TestDoLogin(t *testing.T) {
 		LoginEmail: username,
 		Password:   password,
 	}
-	err := DoLogin(params, context.Background())
+	sessionCookie, err := DoLogin(params, context.Background())
 	if err != nil {
 		fmt.Printf("%+v", err)
 	}
+	fmt.Println(sessionCookie.Name + ": " + sessionCookie.Value)
 }
 
 func TestHomeCount(t *testing.T) {
-	TestDoLogin(t)
+	sessionCookie, err := DoLogin(DoLoginParam{
+		ServerUrl:  url,
+		LoginEmail: username,
+		Password:   password,
+	}, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
 	params := HomeCountParam{
-		ServerUrl: url,
+		ServerUrl:     url,
+		SessionCookie: sessionCookie,
 	}
 	overview, err := HomeCount(params, context.Background())
 	if err != nil {
@@ -42,9 +51,17 @@ func TestHomeCount(t *testing.T) {
 }
 
 func TestHomeStatis(t *testing.T) {
-	TestDoLogin(t)
+	sessionCookie, err := DoLogin(DoLoginParam{
+		ServerUrl:  url,
+		LoginEmail: username,
+		Password:   password,
+	}, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
 	params := HomeStatisParam{
-		ServerUrl: url,
+		ServerUrl:     url,
+		SessionCookie: sessionCookie,
 	}
 	overview, err := HomeStatis(params, context.Background())
 	if err != nil {
@@ -58,11 +75,19 @@ func TestHomeStatis(t *testing.T) {
 }
 
 func TestGroupInitGroup(t *testing.T) {
-	TestDoLogin(t)
+	sessionCookie, err := DoLogin(DoLoginParam{
+		ServerUrl:  url,
+		LoginEmail: username,
+		Password:   password,
+	}, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
 	params := GroupInitGroupParam{
-		ServerUrl: url,
-		Start:     0,
-		Length:    10,
+		ServerUrl:     url,
+		Start:         0,
+		Length:        10,
+		SessionCookie: sessionCookie,
 	}
 	overview, err := GroupInitGroup(params, context.Background())
 	if err != nil {
@@ -76,11 +101,19 @@ func TestGroupInitGroup(t *testing.T) {
 }
 
 func TestWorkerInitWorker(t *testing.T) {
-	TestDoLogin(t)
+	sessionCookie, err := DoLogin(DoLoginParam{
+		ServerUrl:  url,
+		LoginEmail: username,
+		Password:   password,
+	}, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
 	params := WorkerInitWorkerParam{
-		ServerUrl: url,
-		Start:     0,
-		Length:    10,
+		ServerUrl:     url,
+		Start:         0,
+		Length:        10,
+		SessionCookie: sessionCookie,
 	}
 	overview, err := WorkerInitWorker(params, context.Background())
 	if err != nil {
@@ -94,11 +127,19 @@ func TestWorkerInitWorker(t *testing.T) {
 }
 
 func TestMysqlTaskMysqlTaskDatas(t *testing.T) {
-	TestDoLogin(t)
+	sessionCookie, err := DoLogin(DoLoginParam{
+		ServerUrl:  url,
+		LoginEmail: username,
+		Password:   password,
+	}, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
 	params := MysqlTaskMysqlTaskDatasParam{
-		ServerUrl: url,
-		Start:     0,
-		Length:    10,
+		ServerUrl:     url,
+		Start:         0,
+		Length:        10,
+		SessionCookie: sessionCookie,
 	}
 	overview, err := MysqlTaskMysqlTaskDatas(params, context.Background())
 	if err != nil {
@@ -112,11 +153,19 @@ func TestMysqlTaskMysqlTaskDatas(t *testing.T) {
 }
 
 func TestHbaseTaskInitHbaseTaskList(t *testing.T) {
-	TestDoLogin(t)
+	sessionCookie, err := DoLogin(DoLoginParam{
+		ServerUrl:  url,
+		LoginEmail: username,
+		Password:   password,
+	}, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
 	params := HbaseTaskInitHbaseTaskListParam{
-		ServerUrl: url,
-		Start:     0,
-		Length:    10,
+		ServerUrl:     url,
+		Start:         0,
+		Length:        10,
+		SessionCookie: sessionCookie,
 	}
 	overview, err := HbaseTaskInitHbaseTaskList(params, context.Background())
 	if err != nil {
@@ -130,11 +179,19 @@ func TestHbaseTaskInitHbaseTaskList(t *testing.T) {
 }
 
 func TestRabbitmqTaskInitRabbitmqTaskList(t *testing.T) {
-	TestDoLogin(t)
+	sessionCookie, err := DoLogin(DoLoginParam{
+		ServerUrl:  url,
+		LoginEmail: username,
+		Password:   password,
+	}, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
 	params := RabbitmqTaskInitRabbitmqTaskListParam{
-		ServerUrl: url,
-		Start:     0,
-		Length:    10,
+		ServerUrl:     url,
+		Start:         0,
+		Length:        10,
+		SessionCookie: sessionCookie,
 	}
 	overview, err := RabbitmqTaskInitRabbitmqTaskList(params, context.Background())
 	if err != nil {
@@ -148,11 +205,19 @@ func TestRabbitmqTaskInitRabbitmqTaskList(t *testing.T) {
 }
 
 func TestTaskMonitorInitTaskMonitor(t *testing.T) {
-	TestDoLogin(t)
+	sessionCookie, err := DoLogin(DoLoginParam{
+		ServerUrl:  url,
+		LoginEmail: username,
+		Password:   password,
+	}, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
 	params := TaskMonitorInitTaskMonitorParam{
-		ServerUrl: url,
-		Start:     0,
-		Length:    10,
+		ServerUrl:     url,
+		Start:         0,
+		Length:        10,
+		SessionCookie: sessionCookie,
 	}
 	overview, err := TaskMonitorInitTaskMonitor(params, context.Background())
 	if err != nil {
