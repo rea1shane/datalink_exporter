@@ -140,3 +140,20 @@ type HbaseTasks struct {
 type HbaseTask struct {
 	// TODO 待完成
 }
+
+type RabbitmqTasks struct {
+	AaData          []RabbitmqTask `json:"aaData"`
+	Draw            int            `json:"draw"`
+	Length          int            `json:"length"`
+	PageNum         int            `json:"pageNum"`
+	PageSize        int            `json:"pageSize"`
+	Pages           int            `json:"pages"`
+	RecordsFiltered int            `json:"recordsFiltered"`
+	RecordsTotal    int            `json:"recordsTotal"`
+	Size            int            `json:"size"`
+	Start           int            `json:"start"`
+}
+
+type RabbitmqTask struct {
+	// TODO 待完成
+}

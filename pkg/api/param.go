@@ -38,3 +38,8 @@ type HbaseTaskInitHbaseTaskListParam struct {
 	Length    int
 }
 
+type RabbitmqTaskInitRabbitmqTaskListParam struct {
+	ServerUrl string
+	Start     int
+	Length    int
+}
