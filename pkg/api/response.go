@@ -157,3 +157,27 @@ type RabbitmqTasks struct {
 type RabbitmqTask struct {
 	// TODO 待完成
 }
+
+type TaskMonitors struct {
+	AaData          []TaskMonitor `json:"aaData"`
+	Draw            int           `json:"draw"`
+	Length          int           `json:"length"`
+	PageNum         int           `json:"pageNum"`
+	PageSize        int           `json:"pageSize"`
+	Pages           int           `json:"pages"`
+	RecordsFiltered int           `json:"recordsFiltered"`
+	RecordsTotal    int           `json:"recordsTotal"`
+	Size            int           `json:"size"`
+	Start           int           `json:"start"`
+}
+
+type TaskMonitor struct {
+	DelayTime     int    `json:"delayTime"`
+	Exception     string `json:"exception"`
+	GroupID       int    `json:"groupId"`
+	ListenedState string `json:"listenedState"`
+	TargetState   string `json:"targetState"`
+	TaskID        int    `json:"taskId"`
+	TaskName      string `json:"taskName"`
+	WorkerID      int    `json:"workerId"`
+}

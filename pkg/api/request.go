@@ -829,6 +829,127 @@ func RabbitmqTaskInitRabbitmqTaskList(p RabbitmqTaskInitRabbitmqTaskListParam, c
 	return responseStruct.AaData, nil
 }
 
+func TaskMonitorInitTaskMonitor(p TaskMonitorInitTaskMonitorParam, ctx context.Context) ([]TaskMonitor, error) {
+	url := p.ServerUrl + "/taskMonitor/initTaskMonitor"
+	method := "POST"
+	responseStruct := TaskMonitors{}
+	payloadStr := fmt.Sprintf(`{
+    "draw": 1,
+    "columns": [
+        {
+            "data": "taskId",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "taskName",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "delayTime",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "targetState",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "listenedState",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "workerId",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "exception",
+            "name": "",
+            "searchable": true,
+            "orderable": false,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": null,
+            "name": "",
+            "searchable": false,
+            "orderable": false,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        }
+    ],
+    "order": [
+        {
+            "column": 0,
+            "dir": "asc"
+        }
+    ],
+    "start": %d,
+    "length": %d,
+    "search": {
+        "value": "",
+        "regex": false
+    },
+    "taskId": "-1",
+    "groupId": "-1"
+}`, p.Start, p.Length)
+	payload := strings.NewReader(payloadStr)
+	req, err := http.NewRequest(method, url, payload)
+	if err != nil {
+		return nil, failure.Wrap(err)
+	}
+	req.Header.Add("Content-Type", "application/json")
+	req.AddCookie(sessionCookie)
+	response, err := h.Request(req, ctx)
+	if err != nil {
+		return nil, err
+	}
+	err = httpro.GetStructResponseBody(response, &responseStruct)
+	if err != nil {
+		return nil, err
+	}
+	return responseStruct.AaData, nil
+}
+
 func getReqFailureContext(method, url string) failure.Context {
 	return failure.Context{
 		"method": method,

@@ -43,3 +43,9 @@ type RabbitmqTaskInitRabbitmqTaskListParam struct {
 	Start     int
 	Length    int
 }
+
+type TaskMonitorInitTaskMonitorParam struct {
+	ServerUrl string
+	Start     int
+	Length    int
+}
