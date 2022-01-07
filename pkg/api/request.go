@@ -21,7 +21,7 @@ const (
 	NoSessionError failure.StringCode = "No session id in cookies"
 )
 
-// DoLogin 登录账号
+// DoLogin 登录
 func DoLogin(p DoLoginParam, ctx context.Context) error {
 	url := p.ServerUrl + "/userReq/doLogin"
 	method := "POST"
@@ -65,22 +65,22 @@ func DoLogin(p DoLoginParam, ctx context.Context) error {
 }
 
 // HomeCount 获取主页的统计数据
-func HomeCount(p HomeCountParam, ctx context.Context) (Overview, error) {
+func HomeCount(p HomeCountParam, ctx context.Context) (Overviews, error) {
 	url := p.ServerUrl + "/home/count"
 	method := "GET"
-	responseStruct := Overview{}
+	responseStruct := Overviews{}
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
-		return Overview{}, failure.Wrap(err)
+		return Overviews{}, failure.Wrap(err)
 	}
 	req.AddCookie(sessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
-		return Overview{}, err
+		return Overviews{}, err
 	}
 	err = httpro.GetStructResponseBody(response, &responseStruct)
 	if err != nil {
-		return Overview{}, err
+		return Overviews{}, err
 	}
 	return responseStruct, nil
 }
@@ -109,10 +109,11 @@ func HomeStatis(p HomeStatisParam, ctx context.Context) (Statis, error) {
 	return responseStruct, nil
 }
 
-func GroupInitGroup(p GroupInitGroupParam, ctx context.Context) (Group, error) {
+// GroupInitGroup 获取集群管理中分组信息
+func GroupInitGroup(p GroupInitGroupParam, ctx context.Context) (Groups, error) {
 	url := p.ServerUrl + "/group/initGroup"
 	method := "POST"
-	responseStruct := Group{}
+	responseStruct := Groups{}
 	payloadStr := fmt.Sprintf(`{
     "draw": 1,
     "columns": [
@@ -213,25 +214,26 @@ func GroupInitGroup(p GroupInitGroupParam, ctx context.Context) (Group, error) {
 	payload := strings.NewReader(payloadStr)
 	req, err := http.NewRequest(method, url, payload)
 	if err != nil {
-		return Group{}, failure.Wrap(err)
+		return Groups{}, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.AddCookie(sessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
-		return Group{}, err
+		return Groups{}, err
 	}
 	err = httpro.GetStructResponseBody(response, &responseStruct)
 	if err != nil {
-		return Group{}, err
+		return Groups{}, err
 	}
 	return responseStruct, nil
 }
 
-func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) (Worker, error) {
+// WorkerInitWorker 获取集群管理中机器信息
+func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) (Workers, error) {
 	url := p.ServerUrl + "/worker/initWorker"
 	method := "POST"
-	responseStruct := Worker{}
+	responseStruct := Workers{}
 	payloadStr := fmt.Sprintf(`{
     "draw": 1,
     "columns": [
@@ -343,19 +345,23 @@ func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) (Worker, err
 	payload := strings.NewReader(payloadStr)
 	req, err := http.NewRequest(method, url, payload)
 	if err != nil {
-		return Worker{}, failure.Wrap(err)
+		return Workers{}, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.AddCookie(sessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
-		return Worker{}, err
+		return Workers{}, err
 	}
 	err = httpro.GetStructResponseBody(response, &responseStruct)
 	if err != nil {
-		return Worker{}, err
+		return Workers{}, err
 	}
 	return responseStruct, nil
+}
+
+func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context) {
+
 }
 
 func getReqFailureContext(method, url string) failure.Context {

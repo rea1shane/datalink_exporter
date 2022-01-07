@@ -25,3 +25,9 @@ type WorkerInitWorkerParam struct {
 	Start     int
 	Length    int
 }
+
+type MysqlTaskMysqlTaskDatasParam struct {
+	ServerUrl string
+	Start     int
+	Length    int
+}
