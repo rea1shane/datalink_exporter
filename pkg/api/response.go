@@ -52,6 +52,7 @@ type Group struct {
 	Size            int          `json:"size"`
 	Start           int          `json:"start"`
 }
+
 type InnerGroup struct {
 	CreateTime         int64  `json:"createTime"`
 	GenerationID       int    `json:"generationId"`
@@ -61,4 +62,29 @@ type InnerGroup struct {
 	ID                 int    `json:"id"`
 	LastRebalancedTime string `json:"lastRebalancedTime"`
 	ModifyTime         int64  `json:"modifyTime"`
+}
+
+type Worker struct {
+	AaData          []InnerWorker `json:"aaData"`
+	Draw            int           `json:"draw"`
+	Length          int           `json:"length"`
+	PageNum         int           `json:"pageNum"`
+	PageSize        int           `json:"pageSize"`
+	Pages           int           `json:"pages"`
+	RecordsFiltered int           `json:"recordsFiltered"`
+	RecordsTotal    int           `json:"recordsTotal"`
+	Size            int           `json:"size"`
+	Start           int           `json:"start"`
+}
+
+type InnerWorker struct {
+	CreateTime    int64  `json:"createTime"`
+	GroupName     string `json:"groupName"`
+	ID            int    `json:"id"`
+	ModifyTime    int64  `json:"modifyTime"`
+	RestPort      int    `json:"restPort"`
+	StartTime     string `json:"startTime"`
+	WorkerAddress string `json:"workerAddress"`
+	WorkerName    string `json:"workerName"`
+	WorkerState   string `json:"workerState"`
 }

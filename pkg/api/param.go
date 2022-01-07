@@ -19,3 +19,9 @@ type GroupInitGroupParam struct {
 	Start     int
 	Length    int
 }
+
+type WorkerInitWorkerParam struct {
+	ServerUrl string
+	Start     int
+	Length    int
+}

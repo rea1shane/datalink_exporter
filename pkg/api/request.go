@@ -228,6 +228,136 @@ func GroupInitGroup(p GroupInitGroupParam, ctx context.Context) (Group, error) {
 	return responseStruct, nil
 }
 
+func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) (Worker, error) {
+	url := p.ServerUrl + "/worker/initWorker"
+	method := "POST"
+	responseStruct := Worker{}
+	payloadStr := fmt.Sprintf(`{
+    "draw": 1,
+    "columns": [
+        {
+            "data": "id",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "workerName",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "workerState",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "workerAddress",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "restPort",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "groupName",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "startTime",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "createTime",
+            "name": "",
+            "searchable": true,
+            "orderable": false,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "id",
+            "name": "",
+            "searchable": true,
+            "orderable": false,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        }
+    ],
+    "order": [
+        {
+            "column": 0,
+            "dir": "asc"
+        }
+    ],
+    "start": %d,
+    "length": %d,
+    "search": {
+        "value": "",
+        "regex": false
+    },
+    "groupId": "-1"
+}`, p.Start, p.Length)
+	payload := strings.NewReader(payloadStr)
+	req, err := http.NewRequest(method, url, payload)
+	if err != nil {
+		return Worker{}, failure.Wrap(err)
+	}
+	req.Header.Add("Content-Type", "application/json")
+	req.AddCookie(sessionCookie)
+	response, err := h.Request(req, ctx)
+	if err != nil {
+		return Worker{}, err
+	}
+	err = httpro.GetStructResponseBody(response, &responseStruct)
+	if err != nil {
+		return Worker{}, err
+	}
+	return responseStruct, nil
+}
+
 func getReqFailureContext(method, url string) failure.Context {
 	return failure.Context{
 		"method": method,

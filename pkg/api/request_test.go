@@ -74,3 +74,21 @@ func TestGroupInitGroup(t *testing.T) {
 	}
 	fmt.Println(string(bytes))
 }
+
+func TestWorkerInitWorker(t *testing.T) {
+	TestDoLogin(t)
+	params := WorkerInitWorkerParam{
+		ServerUrl: url,
+		Start:     0,
+		Length:    10,
+	}
+	overview, err := WorkerInitWorker(params, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
+	bytes, err := json.Marshal(overview)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(bytes))
+}
