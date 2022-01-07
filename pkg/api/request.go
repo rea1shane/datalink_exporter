@@ -65,24 +65,24 @@ func DoLogin(p DoLoginParam, ctx context.Context) error {
 }
 
 // HomeCount 获取主页的统计数据
-func HomeCount(p HomeCountParam, ctx context.Context) (Overviews, error) {
+func HomeCount(p HomeCountParam, ctx context.Context) (Overview, error) {
 	url := p.ServerUrl + "/home/count"
 	method := "GET"
 	responseStruct := Overviews{}
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
-		return Overviews{}, failure.Wrap(err)
+		return Overview{}, failure.Wrap(err)
 	}
 	req.AddCookie(sessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
-		return Overviews{}, err
+		return Overview{}, err
 	}
 	err = httpro.GetStructResponseBody(response, &responseStruct)
 	if err != nil {
-		return Overviews{}, err
+		return Overview{}, err
 	}
-	return responseStruct, nil
+	return responseStruct.AaData[0], nil
 }
 
 // HomeStatis 获取主页的图表数据
@@ -110,7 +110,7 @@ func HomeStatis(p HomeStatisParam, ctx context.Context) (Statis, error) {
 }
 
 // GroupInitGroup 获取集群管理中分组信息
-func GroupInitGroup(p GroupInitGroupParam, ctx context.Context) (Groups, error) {
+func GroupInitGroup(p GroupInitGroupParam, ctx context.Context) ([]Group, error) {
 	url := p.ServerUrl + "/group/initGroup"
 	method := "POST"
 	responseStruct := Groups{}
@@ -214,23 +214,23 @@ func GroupInitGroup(p GroupInitGroupParam, ctx context.Context) (Groups, error) 
 	payload := strings.NewReader(payloadStr)
 	req, err := http.NewRequest(method, url, payload)
 	if err != nil {
-		return Groups{}, failure.Wrap(err)
+		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.AddCookie(sessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
-		return Groups{}, err
+		return nil, err
 	}
 	err = httpro.GetStructResponseBody(response, &responseStruct)
 	if err != nil {
-		return Groups{}, err
+		return nil, err
 	}
-	return responseStruct, nil
+	return responseStruct.AaData, nil
 }
 
 // WorkerInitWorker 获取集群管理中机器信息
-func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) (Workers, error) {
+func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) ([]Worker, error) {
 	url := p.ServerUrl + "/worker/initWorker"
 	method := "POST"
 	responseStruct := Workers{}
@@ -345,22 +345,22 @@ func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) (Workers, er
 	payload := strings.NewReader(payloadStr)
 	req, err := http.NewRequest(method, url, payload)
 	if err != nil {
-		return Workers{}, failure.Wrap(err)
+		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.AddCookie(sessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
-		return Workers{}, err
+		return nil, err
 	}
 	err = httpro.GetStructResponseBody(response, &responseStruct)
 	if err != nil {
-		return Workers{}, err
+		return nil, err
 	}
-	return responseStruct, nil
+	return responseStruct.AaData, nil
 }
 
-func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context) (MysqlTasks, error) {
+func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context) ([]MysqlTask, error) {
 	url := p.ServerUrl + "/mysqlTask/mysqlTaskDatas"
 	method := "POST"
 	responseStruct := MysqlTasks{}
@@ -567,19 +567,19 @@ func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context
 	payload := strings.NewReader(payloadStr)
 	req, err := http.NewRequest(method, url, payload)
 	if err != nil {
-		return MysqlTasks{}, failure.Wrap(err)
+		return nil, failure.Wrap(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.AddCookie(sessionCookie)
 	response, err := h.Request(req, ctx)
 	if err != nil {
-		return MysqlTasks{}, err
+		return nil, err
 	}
 	err = httpro.GetStructResponseBody(response, &responseStruct)
 	if err != nil {
-		return MysqlTasks{}, err
+		return nil, err
 	}
-	return responseStruct, nil
+	return responseStruct.AaData, nil
 }
 
 func getReqFailureContext(method, url string) failure.Context {
