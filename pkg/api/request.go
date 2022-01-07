@@ -360,8 +360,226 @@ func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) (Workers, er
 	return responseStruct, nil
 }
 
-func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context) {
-
+func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context) (MysqlTasks, error) {
+	url := p.ServerUrl + "/mysqlTask/mysqlTaskDatas"
+	method := "POST"
+	responseStruct := MysqlTasks{}
+	payloadStr := fmt.Sprintf(`{
+    "draw": 1,
+    "columns": [
+        {
+            "data": "id",
+            "name": "",
+            "searchable": true,
+            "orderable": false,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "id",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "taskName",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "detail",
+            "name": "",
+            "searchable": true,
+            "orderable": false,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "targetState",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "listenedState",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "groupId",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "workerId",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "currentTimeStamp",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "startTime",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "readerIp",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "latestEffectSyncLogFileName",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "latestEffectSyncLogFileOffset",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "taskSyncStatus",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "shadowCurrentTimeStamp",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "shadowLatestEffectSyncLogFileName",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "shadowLatestEffectSyncLogFileOffset",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": null,
+            "name": "",
+            "searchable": false,
+            "orderable": false,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        }
+    ],
+    "order": [
+        {
+            "column": 0,
+            "dir": "asc"
+        }
+    ],
+    "start": %d,
+    "length": %d,
+    "search": {
+        "value": "",
+        "regex": false
+    },
+    "readerMediaSourceId": "-1",
+    "groupId": "-1",
+    "id": "-1"
+}`, p.Start, p.Length)
+	payload := strings.NewReader(payloadStr)
+	req, err := http.NewRequest(method, url, payload)
+	if err != nil {
+		return MysqlTasks{}, failure.Wrap(err)
+	}
+	req.Header.Add("Content-Type", "application/json")
+	req.AddCookie(sessionCookie)
+	response, err := h.Request(req, ctx)
+	if err != nil {
+		return MysqlTasks{}, err
+	}
+	err = httpro.GetStructResponseBody(response, &responseStruct)
+	if err != nil {
+		return MysqlTasks{}, err
+	}
+	return responseStruct, nil
 }
 
 func getReqFailureContext(method, url string) failure.Context {
