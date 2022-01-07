@@ -360,6 +360,7 @@ func WorkerInitWorker(p WorkerInitWorkerParam, ctx context.Context) ([]Worker, e
 	return responseStruct.AaData, nil
 }
 
+// MysqlTaskMysqlTaskDatas 获取增量任务中的 MySQL task
 func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context) ([]MysqlTask, error) {
 	url := p.ServerUrl + "/mysqlTask/mysqlTaskDatas"
 	method := "POST"
@@ -529,6 +530,129 @@ func MysqlTaskMysqlTaskDatas(p MysqlTaskMysqlTaskDatasParam, ctx context.Context
         },
         {
             "data": "shadowLatestEffectSyncLogFileOffset",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": null,
+            "name": "",
+            "searchable": false,
+            "orderable": false,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        }
+    ],
+    "order": [
+        {
+            "column": 0,
+            "dir": "asc"
+        }
+    ],
+    "start": %d,
+    "length": %d,
+    "search": {
+        "value": "",
+        "regex": false
+    },
+    "readerMediaSourceId": "-1",
+    "groupId": "-1",
+    "id": "-1"
+}`, p.Start, p.Length)
+	payload := strings.NewReader(payloadStr)
+	req, err := http.NewRequest(method, url, payload)
+	if err != nil {
+		return nil, failure.Wrap(err)
+	}
+	req.Header.Add("Content-Type", "application/json")
+	req.AddCookie(sessionCookie)
+	response, err := h.Request(req, ctx)
+	if err != nil {
+		return nil, err
+	}
+	err = httpro.GetStructResponseBody(response, &responseStruct)
+	if err != nil {
+		return nil, err
+	}
+	return responseStruct.AaData, nil
+}
+
+// HbaseTaskInitHbaseTaskList 获取增量任务中的 Hbase task
+func HbaseTaskInitHbaseTaskList(p HbaseTaskInitHbaseTaskListParam, ctx context.Context) ([]HbaseTask, error) {
+	url := p.ServerUrl + "/hbaseTask/initHbaseTaskList"
+	method := "POST"
+	responseStruct := HbaseTasks{}
+	payloadStr := fmt.Sprintf(`{
+    "draw": 1,
+    "columns": [
+        {
+            "data": "id",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "taskName",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "targetState",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "listenedState",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "groupId",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "workerId",
+            "name": "",
+            "searchable": true,
+            "orderable": true,
+            "search": {
+                "value": "",
+                "regex": false
+            }
+        },
+        {
+            "data": "startTime",
             "name": "",
             "searchable": true,
             "orderable": true,

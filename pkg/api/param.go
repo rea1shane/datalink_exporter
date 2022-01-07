@@ -31,3 +31,10 @@ type MysqlTaskMysqlTaskDatasParam struct {
 	Start     int
 	Length    int
 }
+
+type HbaseTaskInitHbaseTaskListParam struct {
+	ServerUrl string
+	Start     int
+	Length    int
+}
+
