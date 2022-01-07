@@ -1,19 +1,19 @@
 package api
 
 type Overview struct {
-	AaData          []AaData `json:"aaData"`
-	Draw            int      `json:"draw"`
-	Length          int      `json:"length"`
-	PageNum         int      `json:"pageNum"`
-	PageSize        int      `json:"pageSize"`
-	Pages           int      `json:"pages"`
-	RecordsFiltered int      `json:"recordsFiltered"`
-	RecordsTotal    int      `json:"recordsTotal"`
-	Size            int      `json:"size"`
-	Start           int      `json:"start"`
+	AaData          []InnerOverview `json:"aaData"`
+	Draw            int             `json:"draw"`
+	Length          int             `json:"length"`
+	PageNum         int             `json:"pageNum"`
+	PageSize        int             `json:"pageSize"`
+	Pages           int             `json:"pages"`
+	RecordsFiltered int             `json:"recordsFiltered"`
+	RecordsTotal    int             `json:"recordsTotal"`
+	Size            int             `json:"size"`
+	Start           int             `json:"start"`
 }
 
-type AaData struct {
+type InnerOverview struct {
 	GroupCount   int `json:"groupCount"`
 	MappingCount int `json:"mappingCount"`
 	MsCount      int `json:"msCount"`
@@ -38,4 +38,27 @@ type Statis struct {
 	TaskDelayTimeList      []int     `json:"taskDelayTimeList"`
 	WorkerNameListGC       []string  `json:"workerNameListGC"`
 	WorkerNameList         []string  `json:"workerNameList"`
+}
+
+type Group struct {
+	AaData          []InnerGroup `json:"aaData"`
+	Draw            int          `json:"draw"`
+	Length          int          `json:"length"`
+	PageNum         int          `json:"pageNum"`
+	PageSize        int          `json:"pageSize"`
+	Pages           int          `json:"pages"`
+	RecordsFiltered int          `json:"recordsFiltered"`
+	RecordsTotal    int          `json:"recordsTotal"`
+	Size            int          `json:"size"`
+	Start           int          `json:"start"`
+}
+type InnerGroup struct {
+	CreateTime         int64  `json:"createTime"`
+	GenerationID       int    `json:"generationId"`
+	GroupDesc          string `json:"groupDesc"`
+	GroupName          string `json:"groupName"`
+	GroupState         string `json:"groupState"`
+	ID                 int    `json:"id"`
+	LastRebalancedTime string `json:"lastRebalancedTime"`
+	ModifyTime         int64  `json:"modifyTime"`
 }

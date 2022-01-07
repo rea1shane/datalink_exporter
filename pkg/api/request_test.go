@@ -41,13 +41,30 @@ func TestHomeCount(t *testing.T) {
 	fmt.Println(string(bytes))
 }
 
-
 func TestHomeStatis(t *testing.T) {
 	TestDoLogin(t)
 	params := HomeStatisParam{
 		ServerUrl: url,
 	}
 	overview, err := HomeStatis(params, context.Background())
+	if err != nil {
+		fmt.Printf("%+v", err)
+	}
+	bytes, err := json.Marshal(overview)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(bytes))
+}
+
+func TestGroupInitGroup(t *testing.T) {
+	TestDoLogin(t)
+	params := GroupInitGroupParam{
+		ServerUrl: url,
+		Start:     0,
+		Length:    10,
+	}
+	overview, err := GroupInitGroup(params, context.Background())
 	if err != nil {
 		fmt.Printf("%+v", err)
 	}

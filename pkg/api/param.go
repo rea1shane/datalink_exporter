@@ -13,3 +13,9 @@ type HomeCountParam struct {
 type HomeStatisParam struct {
 	ServerUrl string
 }
+
+type GroupInitGroupParam struct {
+	ServerUrl string
+	Start     int
+	Length    int
+}
